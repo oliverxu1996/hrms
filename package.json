@@ -1,0 +1,20 @@
+{
+  "name": "hrms",
+  "version": "1.0.0",
+  "description": "Human Resource Management System",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "keywords": [
+    "hrms"
+  ],
+  "author": "xuke",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "lodash": "^4.17.21",
+    "short-unique-id": "^5.2.0",
+    "uuid": "^10.0.0"
+  }
+}
