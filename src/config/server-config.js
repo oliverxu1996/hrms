@@ -1,7 +1,12 @@
-// 读取配置
+/**
+ * 服务器配置
+ * 
+ * @author xuke
+ * @date 2024/9/8
+ */
 const config = {
-    host: process.SERVER_HOST || '0.0.0.0',
-    port: process.SERVER_PORT || 8080
+    host: process.env.SERVER_HOST || '0.0.0.0',
+    port: process.env.SERVER_PORT || 8080
 };
 
 module.exports = config;

@@ -124,8 +124,11 @@ const User = sequelize.define('User', {
      * 作用域
      */
     scopes: {
-        query: {
+        withoutPassword: {
             attributes: { exclude: ['password'] }
+        },
+        withPassword: {
+            attributes: { include: ['password'] }
         }
     }
 });

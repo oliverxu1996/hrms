@@ -152,7 +152,7 @@ const userService = {
     /**
      * 条件查询用户 
      */
-    queryByCondition: async function(condition) {
+    queryByCondition: async function(condition, scope) {
         // 参数校验
         if (_.isEmpty(condition)) {
             throw new Error('未指定条件，无法进行查询');
@@ -210,13 +210,18 @@ const userService = {
             ];
         }
 
+        // 处理查询范围
+        if (_.isEmpty(scope)) {
+            scope = 'withoutPassword'; // 默认排除密码
+        }
+
         // 分页查询
         const pagination = paginationUtils.parseCondition(condition);
         if (!_.isEmpty(pagination)) {
             query.limit = pagination.limit;
             query.offset = pagination.offset;
 
-            const result = await User.scope('query').findAndCountAll(query);
+            const result = await User.scope(scope).findAndCountAll(query);
             return {
                 total: result.count,
                 rows: result.rows
@@ -224,18 +229,23 @@ const userService = {
         }
 
         // 普通查询
-        return await User.findAll(query);
+        return await User.scope(scope).findAll(query);
     },
 
     /**
      * ID查询用户 
      */
-    queryById: async function(id) {
+    queryById: async function(id, scope) {
         // 参数校验
         validationUtils.checkBlank(id, '未指定ID，无法查询用户');
 
+        // 处理查询范围
+        if (_.isEmpty(scope)) {
+            scope = 'withoutPassword'; // 默认排除密码
+        }
+
         // 查询用户
-        return await User.scope('query').findByPk(id);
+        return await User.scope(scope).findByPk(id);
     },
 
     /**
