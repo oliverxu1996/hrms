@@ -5,6 +5,11 @@
  * @date 2024/9/8
  */
 const config = {
+
+    /**
+     * 调试模式
+     */
+    debug: process.env.AUTH_DEBUG || false,
     
     /**
      * 验证码过期时间

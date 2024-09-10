@@ -9,6 +9,7 @@ const errorHandler = require('./middleware/error-handler');
 
 const authRouter = require('./auth/controller/auth-controller');
 const userRouter = require('./user/controller/user-controller');
+const tenantRouter = require('./tenant/controller/tenant-controller');
 
 // 初始化应用
 const app = express();
@@ -20,6 +21,7 @@ app.use(tokenVerifier);
 // 配置路由
 app.use('/auths', authRouter);
 app.use('/users', userRouter);
+app.use('/tenants', tenantRouter);
 
 // 配置后置处理
 app.use(errorHandler);

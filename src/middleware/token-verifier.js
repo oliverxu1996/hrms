@@ -11,6 +11,11 @@ const authTokenService = require('../auth/service/auth-token-service');
  * @date 2024/9/9
  */
 const tokenVerifier = (req, res, next) => {
+    // 调试模式
+    if (authConfig.debug) {
+        return next();
+    }
+
     // 免校验处理
     if (authConfig.excludedPaths.includes(req.path)) {
         return next();

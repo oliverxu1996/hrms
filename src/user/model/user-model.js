@@ -2,7 +2,12 @@ const { DataTypes } = require('sequelize');
 
 const { sequelize } = require('../../config/db-config');
 
-// 配置用户模型
+/**
+ * 用户模型
+ * 
+ * @author xuke
+ * @date 2024/9/9
+ */
 const User = sequelize.define('User', {
     /**
      * 主键ID
