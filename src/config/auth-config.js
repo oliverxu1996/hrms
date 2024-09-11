@@ -9,22 +9,22 @@ const config = {
     /**
      * 调试模式
      */
-    debug: process.env.AUTH_DEBUG || false,
+    debug: process.env.AUTH_DEBUG,
     
     /**
      * 验证码过期时间
      */
-    captchaTtl: process.env.AUTH_CAPTCHA_TTL || 60 * 5,
+    captchaTtl: process.env.AUTH_CAPTCHA_TTL,
 
     /**
      * JWT令牌Secret
      */
-    jwtSecret: process.env.AUTH_JWT_SECRET || 's3cr3tK3y!@#123',
+    jwtSecret: process.env.AUTH_JWT_SECRET,
 
     /**
      * JWT令牌过期时间
      */
-    jwtExpiry: process.env.AUTH_JWT_EXPIRY || 3600,
+    jwtExpiry: process.env.AUTH_JWT_EXPIRY,
 
     /**
      * 免认证路径

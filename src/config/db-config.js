@@ -1,12 +1,12 @@
 const { Sequelize } = require('sequelize');
 
 // 读取配置
-const dialect = process.env.DB_DIALECT || 'mysql';
-const host = process.env.DB_HOST || '192.168.1.103';
-const port = process.env.DB_PORT || 3306;
-const username = process.env.DB_USERNAME || 'root';
-const password = process.env.DB_PASSWORD || '1234@qwerQWER';
-const database = process.env.DB_DATABASE || 'hrms';
+const dialect = process.env.DB_DIALECT;
+const host = process.env.DB_HOST;
+const port = process.env.DB_PORT;
+const username = process.env.DB_USERNAME;
+const password = process.env.DB_PASSWORD;
+const database = process.env.DB_DATABASE;
 
 // 配置数据库
 const sequelize = new Sequelize(database, username, password, {

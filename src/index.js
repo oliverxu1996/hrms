@@ -1,5 +1,6 @@
 const express = require('express');
 require('express-async-errors');
+require('dotenv').config();
 
 const serverConfig = require('./config/server-config');
 require('./config/db-config');
