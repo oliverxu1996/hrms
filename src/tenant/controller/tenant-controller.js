@@ -111,6 +111,10 @@ router.get('/:tenantId/subscriptions/:id', async (req, res) => {
     }
 
     const tenantSubscription = await tenantSubscriptionService.queryById(req.params.id);
+    if (tenant.id !== tenantSubscription.tenantId) {
+        throw new Error('租户无权限，无法查询租户订阅');
+    }
+    
     res.status(200).json({ code: 200, msg: '操作成功', data: tenantSubscription });
 });
 

@@ -15,7 +15,9 @@ const dateUtils = {
      */
     calculateEndDate: (startDate, interval) => {
         // 参数校验
-        validationUtils.checkEmpty(startDate, '开始时间为空，无法计算结束时间')
+        if (!startDate) {
+            throw new Error('开始时间为空，无法计算结束时间');
+        }
 
         validationUtils.checkBlank(interval, '区间类型为空，无法计算结束时间');
         validationUtils.checkRange(interval, ['monthly', 'quarterly', 'half-yearly', 'yearly'], '区间类型格式非法，无法计算结束时间');

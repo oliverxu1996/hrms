@@ -53,13 +53,13 @@ const tenantSubscriptionService = {
                 endDate = dateUtils.calculateEndDate(startDate, 'monthly');
                 break;
             case "2":
-                endDate = dateUtils.calculateEndDate(endDate, 'quarterly');
+                endDate = dateUtils.calculateEndDate(startDate, 'quarterly');
                 break;
             case "3":
-                endDate = dateUtils.calculateEndDate(endDate, 'half-yearly');
+                endDate = dateUtils.calculateEndDate(startDate, 'half-yearly');
                 break;
             case "4":
-                endDate = dateUtils.calculateEndDate(endDate, 'yearly');
+                endDate = dateUtils.calculateEndDate(startDate, 'yearly');
                 break;
         }
 
@@ -80,21 +80,29 @@ const tenantSubscriptionService = {
     /**
      * 取消订阅
      */
-    cancelSubscription: async function(id) {
+    cancelSubscription: async function(tenantId, id) {
         // 参数校验
         validationUtils.checkBlank(id, '未指定租户订阅ID，无法取消订阅');
 
-        // 存在性校验
+        // 租户存在性校验
+        const sourceTenant = await tenantService.queryById(tenantId);
+        if (_.isEmpty(sourceTenant)) {
+            throw new Error('租户不存在，无法取消订阅');
+        }
+
+        // 租户订阅存在性校验
         const sourceTenantSubscription = await this.queryById(id);
         if (_.isEmpty(sourceTenantSubscription)) {
             throw new Error('租户订阅不存在，无法取消订阅');
         }
 
-        // 标记禁用
-        sourceTenantSubscription.status = '0';
+        // 权限校验
+        if (sourceTenant.id !== sourceTenantSubscription.tenantId) {
+            throw new Error('无操作权限，无法取消订阅');
+        }
 
         // 进行修改
-        await TenantSubscription.update(sourceTenantSubscription, {
+        await TenantSubscription.update({ status: "0" }, {
             where: {
                 id: sourceTenantSubscription.id
             }
