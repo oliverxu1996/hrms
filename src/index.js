@@ -3,7 +3,12 @@ require('express-async-errors');
 require('dotenv').config();
 
 const serverConfig = require('./config/server-config');
+
 require('./config/db-config');
+require('./user/model/user-model');
+require('./tenant/model/tenant-model');
+require('./tenant/model/tenant-subscription-model');
+require('./tenant/model/tenant-package-model');
 
 const tokenVerifier = require('./middleware/token-verifier');
 const errorHandler = require('./middleware/error-handler');

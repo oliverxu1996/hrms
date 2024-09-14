@@ -79,7 +79,7 @@ const tenantPackageService = {
         // 存在性校验
         const sourcePackage = await this.queryById(id);
         if (_.isEmpty(sourcePackage)) {
-            throw new Error('租户套餐不存在，无法进行删除')；
+            throw new Error('租户套餐不存在，无法进行删除');
         }
 
         // 进行删除
