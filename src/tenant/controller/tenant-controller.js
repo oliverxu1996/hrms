@@ -71,7 +71,7 @@ router.get('/:id', async (req, res) => {
  * 发起租户订阅
  */
 router.post('/:tenantId/subscriptions', async (req, res) => {
-    await tenantSubscriptionService.startSubscription(req.params.tenantId, req.body.subscriptionType);
+    await tenantSubscriptionService.startSubscription(req.params.tenantId, req.body.tenantPackageId, req.body.subscriptionType);
     res.status(200).json({ code: 200, msg: '操作成功' });
 });
 

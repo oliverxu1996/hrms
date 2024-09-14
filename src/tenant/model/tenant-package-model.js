@@ -3,12 +3,12 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../config/db-config');
 
 /**
- * 租户订阅模型
+ * 租户套餐
  * 
  * @author xuke
- * @date 2024/9/10
+ * 2024/9/13
  */
-const TenantSubscription = sequelize.define('TenantSubscription', {
+const TenantPackage = sequelize.define('TenantPackage', {
     /**
      * 主键ID
      */
@@ -20,58 +20,23 @@ const TenantSubscription = sequelize.define('TenantSubscription', {
     },
 
     /**
-     * 租户ID
+     * 套餐名称
      */
-    tenantId: {
+    packageName: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: 'tenant_id',
-        comment: '租户ID'
+        field: 'package_name',
+        comment: '套餐名称'
     },
 
     /**
-     * 租户套餐ID
+     * 套餐描述
      */
-    tenantPackageId: {
+    description: {
         type: DataTypes.STRING,
-        allowNull: false,
-        field: 'tenant_package_id',
-        comment: '租户套餐ID'
-    },
-
-    /**
-     * 订阅类型
-     * - 1=月度
-     * - 2=季度
-     * - 3=半年度
-     * - 4=年度
-     */
-    subscriptionType: {
-        type: DataTypes.ENUM,
-        values: ['1', '2', '3', '4', '5'],
-        allowNull: false,
-        field: 'subscription_type',
-        comment: '订阅类型'
-    },
-
-    /**
-     * 起始时间
-     */
-    beginTime: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        field: 'begin_time',
-        comment: '起始时间'
-    },
-
-    /**
-     * 结束时间
-     */
-    endTime: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        field: 'end_time',
-        comment: '结束时间'
+        allowNull: true,
+        field: 'description',
+        comment: '套餐描述'
     },
 
     /**
@@ -85,6 +50,16 @@ const TenantSubscription = sequelize.define('TenantSubscription', {
         allowNull: false,
         field: 'status',
         comment: '状态'
+    },
+
+    /**
+     * 关联菜单ID清单
+     */
+    menuIds: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        field: 'menu_ids',
+        comment: '关联菜单ID清单'
     },
 
     /**
@@ -110,10 +85,10 @@ const TenantSubscription = sequelize.define('TenantSubscription', {
     /**
      * 基础设置
      */
-    tableName: 't_hrms_tenant_subscription',
+    tableName: 't_hrms_tenant_package',
     timestamp: true,
     createdAt: 'createTime',
     updatedAt: 'updateTime'
 });
 
-module.exports = TenantSubscription;
+module.exports = TenantPackage;

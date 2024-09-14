@@ -55,7 +55,6 @@ const tenantService = {
         }
 
         validationUtils.checkBlank(tenant.id, '未指定租户ID，无法进行修改');
-
         this.doParamValidation(tenant);
 
         // 存在性校验

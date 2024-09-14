@@ -7,6 +7,7 @@ const keyUtils = require('../../utils/key-utils');
 const dateUtils = require('../../utils/date-utils');
 
 const tenantService = require('./tenant-service');
+const tenantPackageService = require('./tenant-package-service');
 
 const TenantSubscription = require('../model/tenant-subscription-model');
 
@@ -21,9 +22,10 @@ const tenantSubscriptionService = {
     /**
      * 发起订阅
      */
-    startSubscription: async function(tenantId, subscriptionType) {
+    startSubscription: async function(tenantId, tenantPackageId, subscriptionType) {
         // 参数校验
         validationUtils.checkBlank(tenantId, '租户ID为空，无法发起订阅');
+        validationUtils.checkBlank(tenantPackageId, '租户套餐ID为空，无法发起订阅');
         
         validationUtils.checkBlank(subscriptionType, '订阅类型为空，无法发起订阅');
         validationUtils.checkRange(subscriptionType, ['1', '2', '3', '4'], '订阅类型格式非法，无法发起订阅');
@@ -32,6 +34,12 @@ const tenantSubscriptionService = {
         const sourceTenant = await tenantService.queryById(tenantId);
         if (_.isEmpty(sourceTenant)) {
             throw new Error('租户不存在，无法发起订阅');
+        }
+
+        // 租户套餐存在性校验
+        const sourceTenantPackage = await tenantPackageService.queryById(tenantPackageId);
+        if (_.isEmpty(sourceTenantPackage)) {
+            throw new Error('租户套餐不存在，无法发起订阅');
         }
 
         // 订阅存在性校验
@@ -67,6 +75,7 @@ const tenantSubscriptionService = {
         const tenantSubscription = {
             id: keyUtils.generateUuid(),
             tenantId: tenantId,
+            tenantPackageId: tenantPackageId,
             subscriptionType: subscriptionType,
             beginTime: startDate,
             endTime: endDate,

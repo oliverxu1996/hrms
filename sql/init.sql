@@ -30,6 +30,7 @@ CREATE TABLE `t_hrms_tenant` (
 CREATE TABLE `t_hrms_tenant_subscription` (
     `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
     `tenant_id` VARCHAR(64) NOT NULL COMMENT '租户ID',
+    `tenant_package_id` VARCHAR(64) NOT NULL COMMENT '租户套餐ID',
     `subscription_type` CHAR(2) NOT NULL COMMENT '订阅类型',
     `begin_time` TIMESTAMP NOT NULL COMMENT '起始时间',
     `end_time` TIMESTAMP NOT NULL COMMENT '结束时间',
@@ -39,3 +40,15 @@ CREATE TABLE `t_hrms_tenant_subscription` (
     PRIMARY KEY (`id`),
     KEY `index_tenant_id` (`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '租户订阅表';
+
+/** 租户套餐表 */
+CREATE TABLE `t_hrms_tenant_package` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
+    `package_name` VARCHAR(32) NOT NULL COMMENT '套餐名称',
+    `description` VARCHAR(256) NOT NULL COMMENT '套餐描述',
+    `status` CHAR(2) NOT NULL COMMENT '状态',
+    `menuIds` JSON DEFAULT NULL COMMENT '关联菜单ID清单',
+    `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '租户套餐表';
