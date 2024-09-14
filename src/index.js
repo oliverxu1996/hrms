@@ -11,6 +11,7 @@ require('./tenant/model/tenant-subscription-model');
 require('./tenant/model/tenant-package-model');
 
 const tokenVerifier = require('./middleware/token-verifier');
+const tenantHandler = require('./middleware/tenant-handler');
 const errorHandler = require('./middleware/error-handler');
 
 const authRouter = require('./auth/controller/auth-controller');
@@ -24,6 +25,7 @@ const app = express();
 // 配置前置处理
 app.use(express.json());
 app.use(tokenVerifier);
+app.use(tenantHandler);
 
 // 配置路由
 app.use('/auths', authRouter);

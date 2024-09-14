@@ -2,6 +2,8 @@ const _ = require('lodash');
 
 const authConfig = require('../config/auth-config');
 
+const bearerUtils = require('../utils/bearer-utils');
+
 const authTokenService = require('../auth/service/auth-token-service');
 
 /**
@@ -23,19 +25,17 @@ const tokenVerifier = (req, res, next) => {
 
     // 获取令牌
     const bearerToken = req.headers['authorization'];
-    if (_.isEmpty(bearerToken)) {
+    const token = bearerUtils.extractToken(bearerToken);
+    if (_.isEmpty(token)) {
         return res.sendStatus(403);
     }
-
-    if (!bearerToken.match(/^Bearer\s+(\S+)$/)) {
-        return res.sendStatus(403);
-    }
-
-    const token = bearerToken.split(' ')[1];
 
     // 校验令牌
     try {
-        authTokenService.verify(token);
+        const userCredential = authTokenService.verify(token);
+
+        // 绑定用户凭证
+        req.userCredential = userCredential;
     } catch(err) {
         return res.status(403).send(err.toString());    
     }

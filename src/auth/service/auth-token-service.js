@@ -33,7 +33,7 @@ const authTokenService = {
         const sessionId = keyUtils.generateUuid();
 
         // 生成令牌
-        const token = jwtUtils.sign({ id: user.id, sessionId: sessionId }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
+        const token = jwtUtils.sign({ id: user.id, tenantId: user.tenantId, sessionId: sessionId }, JWT_SECRET, { expiresIn: JWT_EXPIRY });
 
         // 缓存会话
         cacheUtils.set(CACHE_SESSION_KEY + ":" + user.id, sessionId, CACHE_SESSION_TTL);

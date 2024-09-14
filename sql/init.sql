@@ -1,6 +1,7 @@
 /** 用户信息表 **/
 CREATE TABLE `t_hrms_user` (
     `id` VARCHAR(64) NOT NULL COMMENT '主键ID'，
+    `tenant_id` VARCHAR(64) DEFAULT NULL COMMENT '所属租户ID',
     `dept_id` VARCHAR(64) DEFAULT NULL COMMENT '所属组织ID',
     `username` VARCHAR(32) NOT NULL COMMENT '用户名',
     `nickname` VARCHAR(32) NOT NULL COMMENT '用户昵称',
