@@ -75,6 +75,16 @@ const TenantSubscription = sequelize.define('TenantSubscription', {
     },
 
     /**
+     * 用户数量
+     */
+    userCount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        field: 'user_count',
+        comment: '用户数量'
+    },
+
+    /**
      * 状态
      * - 0=禁用
      * - 1=启用

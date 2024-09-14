@@ -34,6 +34,7 @@ CREATE TABLE `t_hrms_tenant_subscription` (
     `subscription_type` CHAR(2) NOT NULL COMMENT '订阅类型',
     `begin_time` TIMESTAMP NOT NULL COMMENT '起始时间',
     `end_time` TIMESTAMP NOT NULL COMMENT '结束时间',
+    `user_count` INT NOT NULL COMMENT '用户数量',
     `status` CHAR(2) NOT NULL COMMENT '状态',
     `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
     `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',

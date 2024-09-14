@@ -22,13 +22,18 @@ const tenantSubscriptionService = {
     /**
      * 发起订阅
      */
-    startSubscription: async function(tenantId, tenantPackageId, subscriptionType) {
+    startSubscription: async function(tenantId, subscription) {
         // 参数校验
         validationUtils.checkBlank(tenantId, '租户ID为空，无法发起订阅');
-        validationUtils.checkBlank(tenantPackageId, '租户套餐ID为空，无法发起订阅');
+        validationUtils.checkBlank(subscription.tenantPackageId, '租户套餐ID为空，无法发起订阅');
         
-        validationUtils.checkBlank(subscriptionType, '订阅类型为空，无法发起订阅');
-        validationUtils.checkRange(subscriptionType, ['1', '2', '3', '4'], '订阅类型格式非法，无法发起订阅');
+        validationUtils.checkBlank(subscription.subscriptionType, '订阅类型为空，无法发起订阅');
+        validationUtils.checkRange(subscription.subscriptionType, ['1', '2', '3', '4'], '订阅类型格式非法，无法发起订阅');
+
+        validationUtils.checkEmpty(subscription.userCount, '用户数量不能为空');
+        if (subscription.userCount <= 0) {
+            throw new Error('用户数量必须大于0');
+        }
 
         // 租户存在性校验
         const sourceTenant = await tenantService.queryById(tenantId);
@@ -37,7 +42,7 @@ const tenantSubscriptionService = {
         }
 
         // 租户套餐存在性校验
-        const sourceTenantPackage = await tenantPackageService.queryById(tenantPackageId);
+        const sourceTenantPackage = await tenantPackageService.queryById(subscription.tenantPackageId);
         if (_.isEmpty(sourceTenantPackage)) {
             throw new Error('租户套餐不存在，无法发起订阅');
         }
@@ -56,7 +61,7 @@ const tenantSubscriptionService = {
         const startDate = new Date();
         
         let endDate = null;
-        switch (subscriptionType) {
+        switch (subscription.subscriptionType) {
             case "1":
                 endDate = dateUtils.calculateEndDate(startDate, 'monthly');
                 break;
@@ -72,18 +77,14 @@ const tenantSubscriptionService = {
         }
 
         // 初始化参数
-        const tenantSubscription = {
-            id: keyUtils.generateUuid(),
-            tenantId: tenantId,
-            tenantPackageId: tenantPackageId,
-            subscriptionType: subscriptionType,
-            beginTime: startDate,
-            endTime: endDate,
-            status: "1"
-        };
+        subscription.id = keyUtils.generateUuid();
+        subscription.tenantId = tenantId;
+        subscription.startDate = startDate;
+        subscription.endDate = endDate;
+        subscription.status = '1';
 
         // 进行保存
-        await TenantSubscription.create(tenantSubscription);
+        await TenantSubscription.create(subscription);
     },
 
     /**
