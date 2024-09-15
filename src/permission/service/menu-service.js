@@ -57,16 +57,22 @@ const menuService = {
         validationUtils.checkBlank(menu.id, '未指定菜单ID，无法进行修改');
         this.doParamValidation(menu);
 
+        // 菜单存在性校验
+        const sourceMenu = await this.queryById(menu.id);
+        if (_.isEmpty(sourceMenu)) {
+            throw new Error('菜单不存在，无法进行修改');
+        }
+
         // 父级菜单存在性校验
         if (!_.isEmpty(menu.parentId)) {
             if (_.isEmpty(await this.queryById(menu.parentId))) {
-                throw new Error('父级菜单不存在，无法进行保存');
+                throw new Error('父级菜单不存在，无法进行修改');
             }
         }
 
         // 菜单名称重复性校验
-        const sourceMenu = await this.queryByCondition({ menuName: menu.menuName });
-        if (menu.id !== sourceMenu.id) {
+        const duplicatedMenu = await this.queryByCondition({ menuName: menu.menuName });
+        if (!_.isEmpty(duplicatedMenu) && menu.id !== duplicatedMenu.id) {
             throw new Error('菜单名称已存在，无法进行修改');
         }
 
@@ -105,7 +111,7 @@ const menuService = {
     queryByCondition: async function(condition) {
         // 参数校验
         if (_.isEmpty(condition)) {
-            throw new Error('未指定条件无法进行查询');
+            throw new Error('未指定条件，无法进行查询');
         }
 
         // 组装查询条件
@@ -113,9 +119,16 @@ const menuService = {
             where: {}
         };
 
+        if (!_.isEmpty(condition.id_in)) {
+            const ids = _.split(condition.id_in, ',');
+            query.where.id = {
+                [Sequelize.Op.in]: ids
+            };
+        }
+
         if (!_.isEmpty(condition.menuName)) {
             if (condition.menuName.startsWith('%') || condition.menuName.endsWith('%')) {
-                condition.where.menuName = {
+                query.where.menuName = {
                     [Sequelize.Op.like]: condition.menuName
                 };
             } else {

@@ -9,6 +9,8 @@ require('./user/model/user-model');
 require('./tenant/model/tenant-model');
 require('./tenant/model/tenant-subscription-model');
 require('./tenant/model/tenant-package-model');
+require('./permission/model/menu-model');
+require('./permission/model/role-model');
 
 const tokenVerifier = require('./middleware/token-verifier');
 const tenantHandler = require('./middleware/tenant-handler');
@@ -19,6 +21,7 @@ const userRouter = require('./user/controller/user-controller');
 const tenantRouter = require('./tenant/controller/tenant-controller');
 const tenantPackageRouter = require('./tenant/controller/tenant-package-controller');
 const menuRouter = require('./permission/controller/menu-controller');
+const roleRouter = require('./permission/controller/role.controller');
 
 // 初始化应用
 const app = express();
@@ -34,6 +37,7 @@ app.use('/users', userRouter);
 app.use('/tenants', tenantRouter);
 app.use('/tenant-packages', tenantPackageRouter);
 app.use('/menus', menuRouter);
+app.use('/roles', roleRouter);
 
 // 配置后置处理
 app.use(errorHandler);
