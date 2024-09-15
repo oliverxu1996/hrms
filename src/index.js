@@ -18,6 +18,7 @@ const authRouter = require('./auth/controller/auth-controller');
 const userRouter = require('./user/controller/user-controller');
 const tenantRouter = require('./tenant/controller/tenant-controller');
 const tenantPackageRouter = require('./tenant/controller/tenant-package-controller');
+const menuRouter = require('./permission/controller/menu-controller');
 
 // 初始化应用
 const app = express();
@@ -32,6 +33,7 @@ app.use('/auths', authRouter);
 app.use('/users', userRouter);
 app.use('/tenants', tenantRouter);
 app.use('/tenant-packages', tenantPackageRouter);
+app.use('/menus', menuRouter);
 
 // 配置后置处理
 app.use(errorHandler);

@@ -25,7 +25,8 @@ const sequelize = new Sequelize(database, username, password, {
 const excludedModels = [
     'Tenant',
     'TenantSubscription',
-    'TenantPackage'
+    'TenantPackage',
+    'Menu'
 ];
 
 sequelize.addHook('beforeCreate', (instance, options) => {
