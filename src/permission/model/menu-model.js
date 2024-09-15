@@ -97,13 +97,13 @@ const Menu = sequelize.define('Menu', {
     },
 
     /**
-     * 显示顺序
+     * 排序号
      */
     orderNum: {
         type: DataTypes.INTEGER,
         allowNull: true,
         field: 'order_num',
-        comment: '显示顺序'
+        comment: '排序号'
     },
 
     /**
