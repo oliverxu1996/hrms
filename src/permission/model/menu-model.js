@@ -58,7 +58,7 @@ const Menu = sequelize.define('Menu', {
      */
     path: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'path',
         comment: '路由路径'
     },
@@ -78,9 +78,19 @@ const Menu = sequelize.define('Menu', {
      */
     component: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'component',
         comment: '组件路径'
+    },
+
+    /**
+     * 权限标识清单
+     */
+    permissions: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        field: 'permissions',
+        comment: '权限标识清单'
     },
 
     /**

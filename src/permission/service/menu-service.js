@@ -171,7 +171,18 @@ const menuService = {
      */
     doParamValidation: function(menu) {
         validationUtils.checkBlank(menu.menuName, '菜单名称不能为空');
-        validationUtils.checkBlank(menu.path, '路由路径不能为空');
+
+        validationUtils.checkBlank(menu.menuType, '菜单类型不能为空');
+        validationUtils.checkRange(menu.menuType, ['1', '2', '3'], '菜单类型格式非法');
+
+        if (menu.menuType === '1') {
+            validationUtils.checkBlank(menu.path, '路由路径不能为空');
+        } else if (menu.menuType === '2') {
+            validationUtils.checkBlank(menu.path, '路由路径不能为空');
+            validationUtils.checkBlank(menu.component, '组件路径不能为空');
+        } else {
+            validationUtils.checkBlank(menu.parentId, '父级菜单ID不能为空');
+        }
         
         validationUtils.checkBlank(menu.status, '状态不能为空');
         validationUtils.checkRange(menu.status, ['0', '1'], '状态格式非法');
