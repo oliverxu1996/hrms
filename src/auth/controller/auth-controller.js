@@ -1,6 +1,8 @@
 const express = require('express');
 const _ = require('lodash');
 
+const bearerUtils = require('../../utils/bearer-utils');
+
 const authLoginService = require('../service/auth-login-service');
 const authTokenService = require('../service/auth-token-service');
 
@@ -35,17 +37,10 @@ router.post('/login', async (req, res) => {
 router.post('/logout', async (req, res) => {
     // 获取令牌
     const bearerToken = req.headers['authorization'];
-    if (_.isEmpty(bearerToken)) {
+    const token = bearerUtils.extractToken(bearerToken);
+    if (_.isEmpty(token)) {
         return res.sendStatus(403);
     }
-
-    // 校验格式
-    if (!bearerToken.match(/^Bearer\s+(\S+)$/)) {
-        return res.sendStatus(403);
-    }
-
-    // 提取令牌
-    const token = bearerToken.split(' ')[1];
 
     // 过期令牌
     authTokenService.invalidate(token);
