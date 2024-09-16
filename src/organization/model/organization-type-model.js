@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const { sequelize } = require('../../config/db-config');
 
 /**
- * 组织类型
+ * 组织类型模型
  * 
  * @author xuke
  * @date 2024/9/16
