@@ -76,12 +76,21 @@ CREATE TABLE `t_hrms_menu` (
 CREATE TABLE `t_hrms_role` (
     `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
     `role_name` VARCHAR(32) NOT NULL COMMENT '角色名称',
-    `menu_ids` JSON DEFAULT NULL COMMENT '权限菜单ID清单',
     `data_scope` CHAR(2) NOT NULL COMMENT '数据权限',
-    `dept_ids` JSON DEFAULT NULL COMMENT '组织ID清单',
     `status` CHAR(2) NOT NULL COMMENT '状态',
     `order_num` INT DEFAULT NULL COMMENT '排序号',
     `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
     `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '角色表';
+
+/** 角色菜单关联表 **/
+CREATE TABLE `t_hrms_role_menu` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
+    `role_id` VARCHAR(64) NOT NULL COMMENT '角色ID',
+    `menu_id` VARCHAR(64) NOT NULL COMMENT '菜单ID',
+    `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `index_role_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '角色菜单关联表';

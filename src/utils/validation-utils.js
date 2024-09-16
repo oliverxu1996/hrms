@@ -45,6 +45,32 @@ const validationUtils = {
     },
 
     /**
+     * 检查对象是否为空
+     */
+    checkObject: function(source, errorMessage) {
+        if (!_.isObject(source)) {
+            throw new Error('对象格式非法');
+        }
+
+        if (_.isEmpty(source)) {
+            throw new Error(errorMessage);
+        }
+    },
+
+    /**
+     * 检查数组是否为空
+     */
+    checkArray: function(source, errorMessage) {
+        if (!_.isArray(source)) {
+            throw new Error('数组格式非法');
+        }
+
+        if (_.isEmpty(source)) {
+            throw new Error(errorMessage);
+        }
+    },
+
+    /**
      * 检查是否非零
      */
     checkNonZero: function(source, errorMessage) {

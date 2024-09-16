@@ -27,7 +27,8 @@ const excludedModels = [
     'TenantSubscription',
     'TenantPackage',
     'Menu',
-    'Role'
+    'Role',
+    'RoleMenu'
 ];
 
 sequelize.addHook('beforeCreate', (instance, options) => {

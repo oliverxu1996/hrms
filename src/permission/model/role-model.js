@@ -30,16 +30,6 @@ const Role = sequelize.define('Role', {
     },
 
     /**
-     * 权限菜单ID清单
-     */
-    menuIds: {
-        type: DataTypes.JSON,
-        allowNull: true,
-        field: 'menu_ids',
-        comment: '权限菜单ID清单'
-    },
-
-    /**
      * 数据权限
      * - 1=所有数据权限
      * - 2=自定义数据权限
@@ -53,16 +43,6 @@ const Role = sequelize.define('Role', {
         allowNull: false,
         field: 'data_scope',
         comment: '数据权限'
-    },
-
-    /**
-     * 组织ID清单（自定义数据权限）
-     */
-    deptIds: {
-        type: DataTypes.JSON,
-        allowNull: true,
-        field: 'dept_ids',
-        comment: '组织ID清单'
     },
 
     /**

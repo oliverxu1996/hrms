@@ -11,6 +11,7 @@ require('./tenant/model/tenant-subscription-model');
 require('./tenant/model/tenant-package-model');
 require('./permission/model/menu-model');
 require('./permission/model/role-model');
+require('./permission/model/role-menu-model');
 
 const tokenVerifier = require('./middleware/token-verifier');
 const tenantHandler = require('./middleware/tenant-handler');
