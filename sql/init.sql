@@ -94,3 +94,20 @@ CREATE TABLE `t_hrms_role_menu` (
     PRIMARY KEY (`id`),
     KEY `index_role_id` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '角色菜单关联表';
+
+
+/***** 组织管理相关 *****/
+
+/** 组织类型表 **/
+CREATE TABLE `t_hrms_organization_type` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
+    `tenant_id` VARCHAR(64) NOT NULL COMMENT '所属租户ID',
+    `type_code` VARCHAR(32) NOT NULL COMMENT '类型编码',
+    `type_name` VARCHAR(32) NOT NULL COMMENT '类型名称',
+    `status` CHAR(2) NOT NULL COMMENT '状态',
+    `order_num` INT DEFAULT NULL COMMENT '排序号',
+    `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `index_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '组织类型表';
