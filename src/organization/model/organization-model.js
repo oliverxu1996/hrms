@@ -138,23 +138,23 @@ const Organization = sequelize.define('Organization', {
     /***** 组织注册地 *****/
 
     /**
-     * 注册地-国家或地区
+     * 注册地-国家或地区ID
      */
-    registeredNation: {
+    registeredNationId: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: 'registered_nation',
-        comment: '注册地-国家或地区'
+        field: 'registered_nation_id',
+        comment: '注册地-国家或地区ID'
     },
 
     /**
-     * 注册地-行政区划
+     * 注册地-行政区划ID
      */
-    registeredJurisdiction: {
+    registeredJurisdictionId: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: 'registered_jurisdiction',
-        comment: '注册地-行政区划'
+        field: 'registered_jurisdiction_id',
+        comment: '注册地-行政区划ID'
     },
 
     /**
@@ -170,23 +170,23 @@ const Organization = sequelize.define('Organization', {
     /***** 组织经营地 *****/
 
     /**
-     * 经营地-国家或地区
+     * 经营地-国家或地区ID
      */
-    businessNation: {
+    businessNationId: {
         type: DataTypes.STRING,
-        allowNull: false,
-        field: 'business_nation',
-        comment: '经营地-国家或地区'
+        allowNull: true,
+        field: 'business_nation_id',
+        comment: '经营地-国家或地区ID'
     },
 
     /**
-     * 经营地-行政区划
+     * 经营地-行政区划ID
      */
-    businessJurisdiction: {
+    businessJurisdictionId: {
         type: DataTypes.STRING,
-        allowNull: false,
-        field: 'business_jurisdiction',
-        comment: '经营地-行政区划'
+        allowNull: true,
+        field: 'business_jurisdiction_id',
+        comment: '经营地-行政区划ID'
     },
 
     /**
@@ -194,7 +194,7 @@ const Organization = sequelize.define('Organization', {
      */
     businessAddress: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         field: 'business_address',
         comment: '经营地-营业地址'
     },
@@ -209,6 +209,7 @@ const Organization = sequelize.define('Organization', {
     status: {
         type: DataTypes.ENUM,
         values: ['0', '1'],
+        allowNull: false,
         field: 'status',
         comment: '状态'
     },

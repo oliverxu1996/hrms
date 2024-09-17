@@ -1,19 +1,16 @@
-/** 用户信息表 **/
-CREATE TABLE `t_hrms_user` (
-    `id` VARCHAR(64) NOT NULL COMMENT '主键ID'，
-    `tenant_id` VARCHAR(64) DEFAULT NULL COMMENT '所属租户ID',
-    `dept_id` VARCHAR(64) DEFAULT NULL COMMENT '所属组织ID',
-    `username` VARCHAR(32) NOT NULL COMMENT '用户名',
-    `nickname` VARCHAR(32) NOT NULL COMMENT '用户昵称',
-    `phone_number` VARCHAR(11) NOT NULL COMMENT '手机号码',
-    `gender` CHAR(2) DEFAULT NULL COMMENT '性别',
-    `password` VARCHAR(128) NOT NULL COMMENT '密码',
+/***** 租户管理相关 *****/
+
+/** 租户套餐表 **/
+CREATE TABLE `t_hrms_tenant_package` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
+    `package_name` VARCHAR(32) NOT NULL COMMENT '套餐名称',
+    `description` VARCHAR(256) NOT NULL COMMENT '套餐描述',
     `status` CHAR(2) NOT NULL COMMENT '状态',
+    `menuIds` JSON DEFAULT NULL COMMENT '关联菜单ID清单',
     `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
     `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`),
-    KEY `index_username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '用户信息表';
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '租户套餐表';
 
 /** 租户信息表 **/
 CREATE TABLE `t_hrms_tenant` (
@@ -43,17 +40,24 @@ CREATE TABLE `t_hrms_tenant_subscription` (
     KEY `index_tenant_id` (`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '租户订阅表';
 
-/** 租户套餐表 **/
-CREATE TABLE `t_hrms_tenant_package` (
-    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
-    `package_name` VARCHAR(32) NOT NULL COMMENT '套餐名称',
-    `description` VARCHAR(256) NOT NULL COMMENT '套餐描述',
+/***** 权限管理相关 *****/
+
+/** 用户信息表 **/
+CREATE TABLE `t_hrms_user` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID'，
+    `tenant_id` VARCHAR(64) DEFAULT NULL COMMENT '所属租户ID',
+    `dept_id` VARCHAR(64) DEFAULT NULL COMMENT '所属组织ID',
+    `username` VARCHAR(32) NOT NULL COMMENT '用户名',
+    `nickname` VARCHAR(32) NOT NULL COMMENT '用户昵称',
+    `phone_number` VARCHAR(11) NOT NULL COMMENT '手机号码',
+    `gender` CHAR(2) DEFAULT NULL COMMENT '性别',
+    `password` VARCHAR(128) NOT NULL COMMENT '密码',
     `status` CHAR(2) NOT NULL COMMENT '状态',
-    `menuIds` JSON DEFAULT NULL COMMENT '关联菜单ID清单',
     `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
     `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '租户套餐表';
+    PRIMARY KEY (`id`),
+    KEY `index_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '用户信息表';
 
 /** 菜单表 **/
 CREATE TABLE `t_hrms_menu` (
@@ -111,3 +115,46 @@ CREATE TABLE `t_hrms_organization_type` (
     PRIMARY KEY (`id`),
     KEY `index_tenant_id` (`tenant_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '组织类型表';
+
+/** 组织表 **/
+CREATE TABLE `t_hrms_organization` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
+    `tenant_id` VARCHAR(64) NOT NULL COMMENT '所属租户ID',
+    `parent_id` VARCHAR(64) DEFAULT NULL COMMENT '上级组织ID',
+    `organization_code` VARCHAR(32) NOT NULL COMMENT '组织编码',
+    `organization_short_name` VARCHAR(64) DEFAULT NULL COMMENT '组织简称',
+    `organization_full_name` VARCHAR(128) NOT NULL COMMENT '组织全称',
+    `organization_type_id` VARCHAR(64) NOT NULL COMMENT '所属组织类型ID',
+    `is_taxable_entity` CHAR(2) NOT NULL COMMENT '是否纳税主体',
+    `usci` VARCHAR(21) NOT NULL COMMENT '统一社会信用代码',
+    `found_date` DATE NOT NULL COMMENT '成立日期',
+    `representative_id` VARCHAR(64) DEFAULT NULL COMMENT '单位负责人ID（或法人）',
+    `representative_phone` VARCHAR(18) DEFAULT NULL COMMENT '单位负责人联系电话（或法人）',
+    `registered_nation_id` VARCHAR(64) NOT NULL COMMENT '注册地-国家或地区ID',
+    `registered_jurisdiction_id` VARCHAR(64) NOT NULL COMMENT '注册地-行政区划ID',
+    `registered_address` VARCHAR(128) NOT NULL COMMENT '注册地-注册地址',
+    `business_nation_id` VARCHAR(64) NOT NULL COMMENT '经营地-国家或地区ID',
+    `business_jurisdiction_id` VARCHAR(64) DEFAULT NULL COMMENT '经营地-国家或地区ID',
+    `business_address` VARCHAR(128) DEFAULT NULL COMMENT '经营地-营业地址',
+    `status` CHAR(2) NOT NULL COMMENT '状态',
+    `order_num` INT DEFAULT NULL COMMENT '排序号',
+    `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `index_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '组织表';
+
+/** 股东表 **/
+CREATE TABLE `t_hrms_shareholder` (
+    `id` VARCHAR(64) NOT NULL COMMENT '主键ID',
+    `tenant_id` VARCHAR(64) NOT NULL COMMENT '所属租户ID',
+    `held_organization_id` VARCHAR(64) NOT NULL COMMENT '被持有组织ID',
+    `holder_organization_id` VARCHAR(64) NOT NULL COMMENT '持久组织ID',
+    `shareholder_type_id` VARCHAR(64) NOT NULL COMMENT '所属股东类别ID',
+    `holding_percentage` FLOAT NOT NULL COMMENT '持股比例',
+    `order_num` INT NOT NULL COMMENT '排序号',
+    `create_time` TIMESTAMP NOT NULL COMMENT '创建时间',
+    `update_time` TIMESTAMP NOT NULL COMMENT '更新时间',
+    PRIMARY KEY (`id`),
+    KEY `index_tenant_id` (`tenant_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT '股东表';
